@@ -1,27 +1,42 @@
-import { useState, useContext } from "react";
-import FormLayout from "../components/FormLayout.jsx";
+import { useState, useContext, useEffect } from "react";
 import FormContext from "../Context/FormContext.jsx";
+import FormLayout from "../components/FormLayout.jsx";
 
 function FormAddOn({ personalInfo }) {
-  const { useValidateRoute } = useContext(FormContext);
+  const {
+    setCanProceed,
+    routeIndex,
+    setRouteIndex,
+    useFindLocationIndex
+  } = useContext(FormContext);
   const [isInputActive, setIsInputActive] = useState(false);
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
 
 
-  function handleFocus() {
-    setIsInputActive(true);
-  }
+  useEffect(() => {
+    setRouteIndex(1);
+    console.log(routeIndex);
+  }, [routeIndex, setRouteIndex]);
 
-  function handleBlur() {
+  useEffect(() => {
+    setCanProceed(true);
+  }, [setCanProceed]);
+
+  const handleFocus = () => {
+    setIsInputActive(true);
+  };
+
+  const handleBlur = () => {
     setIsInputActive(false);
-  }
+  };
+
 
   //FIXME : handle the situation when a user enters an invalid input
-  function handleInvalidInput() {
+  const handleInvalidInput = () => {
 
-  }
+  };
 
   return (
     <FormLayout>

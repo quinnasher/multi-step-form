@@ -8,8 +8,8 @@ export default {
       },
 
       backgroundImage: {
-        desktopBgImg: "url(./src/assets/images/bg-sidebar-desktop.svg)",
-        mobileBgImg: "url(./src/assets/images/bg-sidebar-mobile.svg)"
+        desktopBgImg: "url(/src/assets/images/bg-sidebar-desktop.svg)",
+        mobileBgImg: "url(/src/assets/images/bg-sidebar-mobile.svg)"
       },
       colors: {
         pMarineBlue: "hsl(213, 96%, 18%)",

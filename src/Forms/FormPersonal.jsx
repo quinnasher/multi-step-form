@@ -6,25 +6,31 @@ function FormPersonal({ personalInfo }) {
   const {
     setCanProceed,
     setRouteIndex,
+    routeIndex,
     useFindLocationIndex
   } = useContext(FormContext);
+
   const [isInputActive, setIsInputActive] = useState(false);
   const [isNameValid, setIsNameValid] = useState(true);
   const [isEmailValid, setIsEmailValid] = useState(true);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
-
-
-  useEffect(() => {
-    setRouteIndex(useFindLocationIndex);
-  }, [setRouteIndex, useFindLocationIndex]);
+  const [inputFieldType, setInputFieldType] = useState("test");
+  const nextRouteLocation = useFindLocationIndex(1);
 
   useEffect(() => {
-    setCanProceed(shouldProceed => {
-      return isInputActive && isNameValid && isEmailValid && isPhoneNumberValid;
+    setRouteIndex(nextRouteLocation);
+  }, [nextRouteLocation, setRouteIndex, useFindLocationIndex]);
+
+  useEffect(() => {
+    setCanProceed(() => {
+      return isNameValid && isEmailValid && isPhoneNumberValid;
     });
-  }, [isEmailValid, isInputActive, isNameValid, isPhoneNumberValid, setCanProceed]);
-  const handleFocus = () => {
+  }, [isEmailValid, isNameValid, isPhoneNumberValid, setCanProceed]);
+
+
+  const handleFocus = (event) => {
     setIsInputActive(true);
+    setInputFieldType(event.target.type);
   };
 
   const handleBlur = () => {
@@ -49,20 +55,24 @@ function FormPersonal({ personalInfo }) {
           <input
             onBlur={handleBlur}
             onFocus={handleFocus}
-            className={`${isInputActive ? "input-active" : ""} ` + "input"}
+            className={`${isInputActive && inputFieldType === "text" ? "input-active" : ""} ` + "input"}
             type="text"
             placeholder={personalInfo.nameField.namePlaceholder} />
         </fieldset>
         <fieldset>
           <label className={"text-pMarineBlue"} htmlFor="userEmail">{personalInfo.emailField.email}</label>
-          <input className={"input input-invalid"}
+          <input className={`${isInputActive && inputFieldType === "email" ? "input-active" : ""} ` + "input"}
+                 onBlur={handleBlur}
+                 onFocus={handleFocus}
                  type="email"
                  placeholder={personalInfo.emailField.emailPlaceholder} />
         </fieldset>
         <fieldset>
           <label className={"text-pMarineBlue"} htmlFor="userPhoneNum">{personalInfo.phoneField.phone}</label>
-          <input className={"input input-active"}
-                 type="text"
+          <input className={`${isInputActive && inputFieldType === "tel" ? "input-active" : ""} ` + "input"}
+                 onBlur={handleBlur}
+                 onFocus={handleFocus}
+                 type="tel"
                  placeholder={personalInfo.phoneField.phonePlaceholder} />
         </fieldset>
       </form>
