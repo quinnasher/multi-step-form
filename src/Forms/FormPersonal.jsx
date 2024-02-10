@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext, useEffect, isValidElement } from "react";
 import FormContext from "../Context/FormContext.jsx";
 import FormLayout from "../components/FormLayout.jsx";
 
@@ -6,7 +6,6 @@ function FormPersonal({ personalInfo }) {
   const {
     setCanProceed,
     setRouteIndex,
-    routeIndex,
     useFindLocationIndex
   } = useContext(FormContext);
 
@@ -37,11 +36,32 @@ function FormPersonal({ personalInfo }) {
     setIsInputActive(false);
   };
 
+  const handleUserName = (event) => {
+    const change = event.target.value;
+    if (!change) setIsNameValid(false);
+  };
+  const handleEmail = (event) => {
+    const email = event.target.value;
+    const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (email.length === 0) {
+      setIsEmailValid(true);
+      return;
+    }
+    if (!isValid.test(email)) {  // Check if the regex fails first
+      setIsEmailValid(false);
+    }
+  };
+
 
   //FIXME : handle the situation when a user enters an invalid input
-  const handleInvalidInput = () => {
+  const handleInput = () => {
+    useEffect(() => {
 
+    }, []);
   };
+
+  handleInput();
 
   return (
     <FormLayout>
@@ -61,9 +81,10 @@ function FormPersonal({ personalInfo }) {
         </fieldset>
         <fieldset>
           <label className={"text-pMarineBlue"} htmlFor="userEmail">{personalInfo.emailField.email}</label>
-          <input className={`${isInputActive && inputFieldType === "email" ? "input-active" : ""} ` + "input"}
+          <input className={`${isInputActive && inputFieldType === "email" ? "input-active" : ""} ${isEmailValid ? "" : "invalid-email"} ` + "input"}
                  onBlur={handleBlur}
                  onFocus={handleFocus}
+                 onChange={handleEmail}
                  type="email"
                  placeholder={personalInfo.emailField.emailPlaceholder} />
         </fieldset>
@@ -72,6 +93,7 @@ function FormPersonal({ personalInfo }) {
           <input className={`${isInputActive && inputFieldType === "tel" ? "input-active" : ""} ` + "input"}
                  onBlur={handleBlur}
                  onFocus={handleFocus}
+
                  type="tel"
                  placeholder={personalInfo.phoneField.phonePlaceholder} />
         </fieldset>
