@@ -9,7 +9,7 @@ const useFormStates = () => {
   const location = useLocation();
   const [formRoutes] = useState(["/", "/add-on", "/select-plan", "/submit"]);
   const [formRouteStatus, setFormRouteStatus] = useState([true, false, false, false]);
-  const [canProceed, setCanProceed] = useState(true);
+  const [canProceed, setCanProceed] = useState(false);
   const [routeIndex, setRouteIndex] = useState(0);
 
   const useFindLocation = () => {

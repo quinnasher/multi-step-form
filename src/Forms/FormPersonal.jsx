@@ -1,6 +1,7 @@
-import { useState, useContext, useEffect, isValidElement } from "react";
+import { useState, useContext, useEffect } from "react";
 import FormContext from "../Context/FormContext.jsx";
 import FormLayout from "../components/FormLayout.jsx";
+import usePersonalFormState from "./usePersonalFormState.js";
 
 function FormPersonal({ personalInfo }) {
   const {
@@ -10,11 +11,16 @@ function FormPersonal({ personalInfo }) {
   } = useContext(FormContext);
 
   const [isInputActive, setIsInputActive] = useState(false);
-  const [isNameValid, setIsNameValid] = useState(true);
-  const [isEmailValid, setIsEmailValid] = useState(true);
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(true);
+  const [isNameValid, setIsNameValid] = useState(false);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
   const [inputFieldType, setInputFieldType] = useState("test");
   const nextRouteLocation = useFindLocationIndex(1);
+
+  // user data
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhoneNumber, serUserPhoneNumber] = useState("");
 
   useEffect(() => {
     setRouteIndex(nextRouteLocation);
@@ -48,9 +54,7 @@ function FormPersonal({ personalInfo }) {
       setIsEmailValid(true);
       return;
     }
-    if (!isValid.test(email)) {  // Check if the regex fails first
-      setIsEmailValid(false);
-    }
+    setIsEmailValid(isValid.test(email));
   };
 
 
