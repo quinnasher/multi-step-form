@@ -28,7 +28,7 @@
     }
 
     .next-btn {
-        @apply bg-pMarineBlue font-bold text-white p-2 md:px-5 text-center rounded-lg flex items-center justify-center
+        @apply bg-pMarineBlue font-bold text-white p-2 md:px-5 text-center rounded-sm md:rounded-lg flex items-center justify-center
     }
 }
 

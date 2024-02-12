@@ -1,71 +1,43 @@
-import { useState, useContext, useEffect } from "react";
-import FormContext from "../Context/FormContext.jsx";
 import FormLayout from "../components/FormLayout.jsx";
-import usePersonalFormState from "./usePersonalFormState.js";
+import usePersonalFormState from "./formStates/usePersonalFormState.js";
+import { useContext } from "react";
+import FormContext from "../Context/FormContext.jsx";
+import findLocationIndex from "../Context/contextFunctions/findLocationIndex.js";
 
 function FormPersonal({ personalInfo }) {
+
   const {
+    handleBlur,
+    handleFocus,
+    handleEmail,
+    handleUserName,
+    isInputActive,
+    inputFieldType,
+    isEmailValid,
+    userEmail,
+    userName,
+    userPhoneNumber
+  } = usePersonalFormState();
+
+  const {
+    useValidateRoute,
+    useFindLocationIndex,
+    formRouteStatus,
+    canProceed,
     setCanProceed,
-    setRouteIndex,
-    useFindLocationIndex
+    routeIndex,
+    setRouteIndex
   } = useContext(FormContext);
 
-  const [isInputActive, setIsInputActive] = useState(false);
-  const [isNameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
-  const [inputFieldType, setInputFieldType] = useState("test");
-  const nextRouteLocation = useFindLocationIndex(1);
+  // setCanProceed(true);
+  // setRouteIndex(1);
+  useValidateRoute(true, 1);
+  console.log(useValidateRoute);
+  console.log(formRouteStatus);
 
-  // user data
-  const [userName, setUserName] = useState("");
-  const [userEmail, setUserEmail] = useState("");
-  const [userPhoneNumber, serUserPhoneNumber] = useState("");
-
-  useEffect(() => {
-    setRouteIndex(nextRouteLocation);
-  }, [nextRouteLocation, setRouteIndex, useFindLocationIndex]);
-
-  useEffect(() => {
-    setCanProceed(() => {
-      return isNameValid && isEmailValid && isPhoneNumberValid;
-    });
-  }, [isEmailValid, isNameValid, isPhoneNumberValid, setCanProceed]);
-
-
-  const handleFocus = (event) => {
-    setIsInputActive(true);
-    setInputFieldType(event.target.type);
-  };
-
-  const handleBlur = () => {
-    setIsInputActive(false);
-  };
-
-  const handleUserName = (event) => {
-    const change = event.target.value;
-    if (!change) setIsNameValid(false);
-  };
-  const handleEmail = (event) => {
-    const email = event.target.value;
-    const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    if (email.length === 0) {
-      setIsEmailValid(true);
-      return;
-    }
-    setIsEmailValid(isValid.test(email));
-  };
-
-
-  //FIXME : handle the situation when a user enters an invalid input
-  const handleInput = () => {
-    useEffect(() => {
-
-    }, []);
-  };
-
-  handleInput();
+  const isEmailEmpty = userEmail.length === 0;
+  const isNameEmpty = userName.length === 0;
+  const isPhoneEmpty = userPhoneNumber.length === 0;
 
   return (
     <FormLayout>
@@ -79,17 +51,20 @@ function FormPersonal({ personalInfo }) {
           <input
             onBlur={handleBlur}
             onFocus={handleFocus}
+            onChange={handleUserName}
             className={`${isInputActive && inputFieldType === "text" ? "input-active" : ""} ` + "input"}
             type="text"
+            // value={user}
             placeholder={personalInfo.nameField.namePlaceholder} />
         </fieldset>
         <fieldset>
           <label className={"text-pMarineBlue"} htmlFor="userEmail">{personalInfo.emailField.email}</label>
-          <input className={`${isInputActive && inputFieldType === "email" ? "input-active" : ""} ${isEmailValid ? "" : "invalid-email"} ` + "input"}
+          <input className={`${isInputActive && inputFieldType === "email" ? "input-active " : " "} ${isEmailValid || isEmailEmpty ? " " : "invalid-email "} ` + "input"}
                  onBlur={handleBlur}
                  onFocus={handleFocus}
                  onChange={handleEmail}
                  type="email"
+                 value={userEmail}
                  placeholder={personalInfo.emailField.emailPlaceholder} />
         </fieldset>
         <fieldset>

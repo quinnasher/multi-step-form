@@ -1,7 +1,9 @@
 import FormLayout from "../components/FormLayout.jsx";
 
 function FormSelectPlan() {
-  return (<FormLayout></FormLayout>);
+  return (<FormLayout>
+
+  </FormLayout>);
 
 }
 

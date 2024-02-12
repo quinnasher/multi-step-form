@@ -12,20 +12,16 @@
  * validateRoute(true, 2, "contact-details", routes, routesStatus, setRoutsStatus);
  */
 export default function validateRoute(canProceed, index, routes, routesStatus, setRoutsStatus) {
-  if (!canProceed) return;
+  // if (!canProceed) return;
   if (index < 0 || index > routes.length - 1 || (canProceed || index) === undefined) return;
 
-  console.log("The function was not returned");
+  // console.log("The function was not returned");
   // Create a copy of the routes status to avoid mutating the original state
   const updatedRouteStatus = [...routesStatus];
 
   // Mark the current route as validated
-  updatedRouteStatus[index] = true;
+  updatedRouteStatus[index] = canProceed;
 
   // Update the routes status state if validation allows proceeding
-  if (canProceed) {
-    setRoutsStatus(updatedRouteStatus);
-    console.log(routesStatus);
-  }
-
+  setRoutsStatus(updatedRouteStatus);
 }

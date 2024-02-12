@@ -9,8 +9,12 @@ const useFormStates = () => {
   const location = useLocation();
   const [formRoutes] = useState(["/", "/add-on", "/select-plan", "/submit"]);
   const [formRouteStatus, setFormRouteStatus] = useState([true, false, false, false]);
-  const [canProceed, setCanProceed] = useState(false);
-  const [routeIndex, setRouteIndex] = useState(0);
+
+
+  // user Personal data
+  const [userName, setUserName] = useState("");
+  const [userEmail, setUserEmail] = useState("");
+  const [userPhoneNumber, setUserPhoneNumber] = useState("");
 
   const useFindLocation = () => {
     return findLocation(formRoutes, location);
@@ -22,23 +26,29 @@ const useFormStates = () => {
   };
 
   const useValidateRoute = (canProceed, routeIndex) => {
+    // console.log("useValidateRoute executed:", canProceed, routeIndex); // Added here!
+    // console.log("useValidateRoute useEffect fired:", canProceed, routeIndex);
     useEffect(() => {
-      console.log(formRouteStatus);
+      console.log("useValidateRoute useEffect fired:", canProceed, routeIndex);
+      // console.log(formRouteStatus);
       validateRoute(canProceed, routeIndex, formRoutes, formRouteStatus, setFormRouteStatus);
     }, [canProceed, routeIndex]);
   };
 
 
   return {
-    canProceed,
-    setCanProceed,
-    routeIndex,
-    setRouteIndex,
     formRoutes,
+    location,
     formRouteStatus,
     useFindLocationIndex,
     useFindLocation,
-    useValidateRoute
+    useValidateRoute,
+    userEmail,
+    setUserEmail,
+    userName,
+    setUserName,
+    userPhoneNumber,
+    setUserPhoneNumber
   };
 };
 
