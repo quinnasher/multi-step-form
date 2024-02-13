@@ -4,40 +4,46 @@ import FormContext from "../../Context/FormContext.jsx";
 function usePersonalFormState() {
 
   const {
-
-    useFindLocationIndex,
+    useFindNextLocationIndex,
+    useValidateRoute,
     userEmail,
     userName,
     userPhoneNumber,
     setUserName,
     setUserPhoneNumber,
-    setUserEmail
+    setUserEmail,
+    canProceed,
+    setCanProceed,
+    nextRouteIndex,
+    setNextRouteIndex,
+    isInputEmpty,
+    setIsInputEmpty,
+    formRouteStatus,
+    isPhoneNumberValid,
+    setIsPhoneNumberValid,
+    isEmailValid,
+    setIsEmailValid
   } = useContext(FormContext);
 
   const [isInputActive, setIsInputActive] = useState(false);
-  const [isNameValid, setIsNameValid] = useState(false);
-  const [isEmailValid, setIsEmailValid] = useState(false);
-  const [isInputEmpty, setIsInputEmpty] = useState(true);
-  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
   const [inputFieldType, setInputFieldType] = useState("");
-  const nextRouteLocation = useFindLocationIndex(1);
+  const nextRouteLocationIndex = useFindNextLocationIndex(1);
+  const [isNameEmpty, setIsNameEmpty] = useState(true);
 
-  // user data
+  useEffect(() => {
+    setIsInputEmpty(userName.length > 0 && userEmail.length > 0 && userPhoneNumber.length > 0);
+  }, [setIsInputEmpty, userEmail.length, userName.length, userPhoneNumber.length]);
 
 
-  // useEffect(() => {
-  //   setRouteIndex(nextRouteLocation);
-  // }, [nextRouteLocation, setRouteIndex, useFindLocationIndex]);
-  //
-  // useEffect(() => {
-  //   setCanProceed(() => {
-  //     return isNameValid && isEmailValid && isPhoneNumberValid;
-  //   });
-  // }, [isEmailValid, isNameValid, isPhoneNumberValid, setCanProceed]);
+  useEffect(() => {
+    setCanProceed(() => {
+      // console.log("isInputEmpty value " + isInputEmpty);
+      return isPhoneNumberValid && isEmailValid && isInputEmpty;
+    });
+    setNextRouteIndex(nextRouteLocationIndex);
+  }, [formRouteStatus, isEmailValid, isInputEmpty, isPhoneNumberValid, nextRouteLocationIndex, setCanProceed, setNextRouteIndex]);
+  useValidateRoute(canProceed, nextRouteIndex);
 
-  // useEffect(() => {
-  //
-  // }, []);
 
   const handleFocus = (event) => {
     setIsInputActive(true);
@@ -47,18 +53,29 @@ function usePersonalFormState() {
   const handleBlur = () => {
     setIsInputActive(false);
   };
-
-  const handleUserName = (event) => {
-    const change = event.target.value;
-    if (!change) setIsNameValid(false);
-  };
   const handleEmail = (event) => {
     const email = event.target.value;
     const isValid = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
 
     setIsEmailValid(isValid);
-    console.log(isValid);
     setUserEmail(email);
+  };
+
+  const handleUserName = (event) => {
+    const name = event.target.value;
+    setUserName(name);
+  };
+
+  const handlePhoneNumber = (event) => {
+    const phoneNumber = event.target.value;
+    if (phoneNumber.length >= 10 && phoneNumber.length <= 11) {
+      setIsPhoneNumberValid(true);
+      // console.log("OnChange event is triggered and Phone validation is " + isPhoneNumberValid);
+    } else {
+      setIsPhoneNumberValid(false);
+      // console.log("OnChange event is triggered and Phone validation is " + isPhoneNumberValid);
+    }
+    setUserPhoneNumber(phoneNumber);
   };
 
 
@@ -67,16 +84,15 @@ function usePersonalFormState() {
     isInputEmpty,
     isInputActive,
     setIsInputActive,
-    isNameValid,
-    setIsNameValid,
     isPhoneNumberValid,
     setIsPhoneNumberValid,
     inputFieldType,
     setInputFieldType,
-    nextRouteLocation,
     handleBlur,
     handleFocus,
     handleEmail,
+    handleUserName,
+    handlePhoneNumber,
     userEmail,
     userName,
     userPhoneNumber,

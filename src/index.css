@@ -30,5 +30,21 @@
     .next-btn {
         @apply bg-pMarineBlue font-bold text-white p-2 md:px-5 text-center rounded-sm md:rounded-lg flex items-center justify-center
     }
+
+    .error {
+        @apply absolute text-pStrawBerry text-xs font-bold lowercase hidden
+    }
+
+    .name-error {
+        @apply right-0 top-1 block
+    }
+
+    .email-error {
+        @apply top-20 right-0 block
+    }
+
+    .phone-error {
+        @apply right-0 top-[9.5rem] block
+    }
 }
 

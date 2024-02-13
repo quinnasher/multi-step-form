@@ -1,22 +1,27 @@
 import Button from "./Button.jsx";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import { Link } from "react-router-dom";
 import FormContext from "../Context/FormContext.jsx";
 
 function SideNav({ sideNavText }) {
   const {
-    canProceed,
-    routeIndex,
     formRoutes,
     useFindLocation,
-    useValidateRoute,
-    formRouteStatus
+    formRouteStatus,
+    count,
+    setCount,
+    handleIsRouteClicked,
+    setIsRouteClicked,
+    isRouteClicked
   } = useContext(FormContext);
+
 
   const routeName = useFindLocation();
 
-  // determines whether a rout is accessible
-  useValidateRoute(canProceed, routeIndex);
+  const handleClick = () => {
+    setIsRouteClicked(true);
+    console.log(isRouteClicked);
+  };
 
   return (
     <ul className={"flex justify-center  gap-4 md:gap-6 md:flex-col md:justify-normal pt-8 md:pl-8 bg-mobileBgImg md:bg-desktopBgImg min-h-full min-w-full bg-no-repeat bg-cover bg-top  md:bg-center md:rounded-lg overflow-hidden"}>
@@ -26,7 +31,8 @@ function SideNav({ sideNavText }) {
           {/*This function call creates the step values*/}
           {sideBarEl.stepF()}
           <div className={"pt-[6px]"}>
-            <Link to={formRouteStatus[index] ? formRoutes[index] : ""}>
+
+            <Link onClick={handleClick} to={formRouteStatus[1] ? formRoutes[index] : ""}>
               <Button
                 text={sideBarEl.number}
                 btnStyle={routeName === formRoutes[index] ? "btn-active" : "btn-not-active"}>

@@ -8,47 +8,109 @@ import findLocationIndex from "./contextFunctions/findLocationIndex.js";
 const useFormStates = () => {
   const location = useLocation();
   const [formRoutes] = useState(["/", "/add-on", "/select-plan", "/submit"]);
-  const [formRouteStatus, setFormRouteStatus] = useState([true, false, false, false]);
-
-
+  const [formRouteStatus, setFormRouteStatus] = useState([true, false, true, true]);
+  const [canProceed, setCanProceed] = useState(false);
+  const [nextRouteIndex, setNextRouteIndex] = useState(1);
+  const [count, setCount] = useState(0);
+  const [previousCount, setPreviousCount] = useState(0);
+  const [isRouteClicked, setIsRouteClicked] = useState(false);
   // user Personal data
   const [userName, setUserName] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userPhoneNumber, setUserPhoneNumber] = useState("");
+  const [inputFieldStatus, setInputFieldStatus] = useState([false, false, false]);
+  const [isInputEmpty, setIsInputEmpty] = useState(true);
+  const [isEmailValid, setIsEmailValid] = useState(false);
+  const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
+
+
+  // useEffect(() => {
+  //   if (previousCount < count) {
+  //     setPreviousCount(count);
+  //     console.log("Route has been clicked");
+  //     setIsRouteClicked(true);
+  //   } else {
+  //     setIsRouteClicked(false);
+  //     console.log(isRouteClicked);
+  //   }
+  // }, [count, isRouteClicked]);
+
+  const handleIsRouteClicked = () => {
+    setCount(count + 1);
+    if (previousCount < count) {
+      setIsRouteClicked(true);
+      setPreviousCount(count);
+      console.log(isRouteClicked);
+      console.log(previousCount, count);
+    } else {
+      // console.log(previousCount, count);
+      setIsRouteClicked(false);
+      console.log(isRouteClicked);
+    }
+  };
+
+  const useFindNextLocationIndex = (nextRoute = 0) => {
+    return findLocationIndex(formRoutes, location) + nextRoute;
+  };
+
+  const useFindPreviousLocationIndex = (previousRoute = 0) => {
+    const previousLocation = findLocationIndex(formRoutes, location) - previousRoute;
+    if (previousLocation < 0) return;
+    return previousLocation;
+  };
 
   const useFindLocation = () => {
     return findLocation(formRoutes, location);
 
   };
-
-  const useFindLocationIndex = (nextRoute = 0) => {
-    return findLocationIndex(formRoutes, location) + nextRoute;
-  };
-
   const useValidateRoute = (canProceed, routeIndex) => {
-    // console.log("useValidateRoute executed:", canProceed, routeIndex); // Added here!
-    // console.log("useValidateRoute useEffect fired:", canProceed, routeIndex);
     useEffect(() => {
-      console.log("useValidateRoute useEffect fired:", canProceed, routeIndex);
-      // console.log(formRouteStatus);
       validateRoute(canProceed, routeIndex, formRoutes, formRouteStatus, setFormRouteStatus);
     }, [canProceed, routeIndex]);
   };
 
+  const moveNextRoute = (nextLocation) => {
+    if (!canProceed) return;
+    return formRoutes[nextLocation];
+  };
+  const movePreviousRoute = (previousLocation) => {
+    if (!canProceed)
+      return formRoutes[previousLocation];
+  };
 
   return {
-    formRoutes,
-    location,
+    setIsRouteClicked,
+    isRouteClicked,
+    inputFieldStatus,
+    setInputFieldStatus,
+    count,
+    setCount,
+    canProceed,
     formRouteStatus,
-    useFindLocationIndex,
-    useFindLocation,
-    useValidateRoute,
-    userEmail,
+    formRoutes,
+    isEmailValid,
+    isInputEmpty,
+    isPhoneNumberValid,
+    location,
+    nextRouteIndex,
+    setCanProceed,
+    setIsEmailValid,
+    setIsInputEmpty,
+    setIsPhoneNumberValid,
+    setNextRouteIndex,
     setUserEmail,
-    userName,
     setUserName,
-    userPhoneNumber,
-    setUserPhoneNumber
+    setUserPhoneNumber,
+    useFindLocation,
+    useFindNextLocationIndex,
+    useFindPreviousLocationIndex,
+    useValidateRoute,
+    moveNextRoute,
+    movePreviousRoute,
+    handleIsRouteClicked,
+    userEmail,
+    userName,
+    userPhoneNumber
   };
 };
 

@@ -1,8 +1,23 @@
 import SideNav from "./SideNav.jsx";
 import sideBarText from "../data/sideBarText.js";
 import Button from "./Button.jsx";
+import { useContext, useEffect, useState } from "react";
+import FormContext from "../Context/FormContext.jsx";
+import { Link } from "react-router-dom";
 
 function FormLayout({ children }) {
+  const {
+
+    useFindPreviousLocationIndex,
+    useFindNextLocationIndex,
+    movePreviousRoute,
+    moveNextRoute
+  } = useContext(FormContext);
+
+  const nextLocation = useFindNextLocationIndex(1);
+  const previousLocation = useFindPreviousLocationIndex(1);
+
+
   return (
     <main className={" relative md:min-w-min min-w-[300px] h-[812px] md:h-screen bg-white md:bg-nMagnolia flex justify-center md:items-center"}>
       <div className={" relative bg-nMagnolia md:bg-nWhite w-full flex flex-col   md:shadow-lg md:flex-row  h-[70%] md:w-[70%] md:rounded-lg md:justify-between md:h-[80%]"}>
@@ -14,9 +29,13 @@ function FormLayout({ children }) {
         </div>
       </div>
 
-      <div className={"absolute flex justify-between w-[90%] bottom-44 md:w-[28.55%] md:bottom-[4.56rem] md:right-[19.75rem]"}>
-        <Button text={"Go Back"} btnStyle={"text-nCoolGray font-bold"}></Button>
-        <Button text={"Next Step"} btnStyle={"next-btn"}></Button>
+      <div className={"absolute flex justify-between w-[90%] bottom-[11.5rem] md:w-[28.55%] md:bottom-[4.56rem] md:right-[19.75rem]"}>
+        <Link to={movePreviousRoute(previousLocation)}>
+          <Button text={"Go Back"} btnStyle={"text-nCoolGray font-bold"}></Button>
+        </Link>
+        <Link to={moveNextRoute(nextLocation)}>
+          <Button text={"Next Step"} btnStyle={"next-btn"}></Button>
+        </Link>
       </div>
     </main>
   );
