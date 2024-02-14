@@ -32,7 +32,7 @@ function FormPersonal({ personalInfo }) {
     <FormLayout>
       <div>
         <h1 className={"text-pMarineBlue   font-bold text-2xl mb-3"}>{personalInfo.title}</h1>
-        <h2 className={"text-nCoolGray text-1rem md:text-sm mb-3"}>{personalInfo.description}</h2>
+        <h2 className={"text-nCoolGray text-[1.1rem]  md:text-sm mb-3"}>{personalInfo.description}</h2>
       </div>
       <form className={"relative flex flex-col gap-3 font-medium capitalize"}>
         <fieldset className={"flex flex-col "}>

@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+    .bill-clicked {
+        @apply border-pPurplishBlue bg-nAlabaster
+    }
+
     .btn-active {
         @apply bg-pLightBlue outline-none text-sm font-bold text-center text-pMarineBlue h-7 w-7 rounded-full
     }

@@ -23,6 +23,9 @@ const useFormStates = () => {
   const [isEmailValid, setIsEmailValid] = useState(false);
   const [isPhoneNumberValid, setIsPhoneNumberValid] = useState(false);
 
+  // Select Plan Context
+  const [billOption, setBillOption] = useState("monthly");
+  const [isBillOptionYearly, setIsBillOptionYearly] = useState(false);
 
   // useEffect(() => {
   //   if (previousCount < count) {
@@ -79,24 +82,31 @@ const useFormStates = () => {
   };
 
   return {
-    setIsRouteClicked,
-    isRouteClicked,
-    inputFieldStatus,
-    setInputFieldStatus,
-    count,
-    setCount,
+    billOption,
     canProceed,
+    count,
     formRouteStatus,
     formRoutes,
+    handleIsRouteClicked,
+    inputFieldStatus,
+    isBillOptionYearly,
     isEmailValid,
     isInputEmpty,
     isPhoneNumberValid,
+    isRouteClicked,
     location,
+    moveNextRoute,
+    movePreviousRoute,
     nextRouteIndex,
+    setBillOption,
     setCanProceed,
+    setCount,
+    setInputFieldStatus,
+    setIsBillOptionYearly,
     setIsEmailValid,
     setIsInputEmpty,
     setIsPhoneNumberValid,
+    setIsRouteClicked,
     setNextRouteIndex,
     setUserEmail,
     setUserName,
@@ -105,9 +115,6 @@ const useFormStates = () => {
     useFindNextLocationIndex,
     useFindPreviousLocationIndex,
     useValidateRoute,
-    moveNextRoute,
-    movePreviousRoute,
-    handleIsRouteClicked,
     userEmail,
     userName,
     userPhoneNumber

@@ -13,7 +13,7 @@ export default {
       },
       colors: {
         pMarineBlue: "hsl(213, 96%, 18%)",
-        pPurplishBlue: "hsl(243, 100%, 62%)",
+        pPurplishBlue: "#5a549d",
         pPastelBlue: "hsl(228, 100%, 84%)",
         pLightBlue: "hsl(206, 94%, 87%)",
         pStrawBerry: "hsl(354, 84%, 57%)",
