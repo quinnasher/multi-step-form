@@ -7,7 +7,7 @@ import findLocationIndex from "./contextFunctions/findLocationIndex.js";
 
 const useFormStates = () => {
   const location = useLocation();
-  const [formRoutes] = useState(["/", "/add-on", "/select-plan", "/submit"]);
+  const [formRoutes] = useState(["/", "/select-plan", "/add-on", "/submit"]);
   const [formRouteStatus, setFormRouteStatus] = useState([true, false, true, true]);
   const [canProceed, setCanProceed] = useState(false);
   const [nextRouteIndex, setNextRouteIndex] = useState(1);
@@ -74,8 +74,8 @@ const useFormStates = () => {
     return formRoutes[nextLocation];
   };
   const movePreviousRoute = (previousLocation) => {
-    if (!canProceed)
-      return formRoutes[previousLocation];
+    // if (!canProceed)
+    return formRoutes[previousLocation];
   };
 
   return {

@@ -20,8 +20,7 @@ function FormPersonal({ personalInfo }) {
   } = usePersonalFormState();
 
   const {
-    isRouteClicked,
-    handleIsRouteClicked
+    isRouteClicked
   } = useContext(FormContext);
 
   const isEmailEmpty = userEmail.length === 0;
@@ -37,7 +36,7 @@ function FormPersonal({ personalInfo }) {
       </div>
       <form className={"relative flex flex-col gap-3 font-medium capitalize"}>
         <fieldset className={"flex flex-col "}>
-          <label className={"text-pMarineBlue"} htmlFor="userName">{personalInfo.nameField.name}</label>
+          <label className={"text-pMarineBlue font-normal"} htmlFor="userName">{personalInfo.nameField.name}</label>
           <input
             onBlur={handleBlur}
             onFocus={handleFocus}
@@ -51,7 +50,7 @@ function FormPersonal({ personalInfo }) {
           </div>
         </fieldset>
         <fieldset>
-          <label className={"text-pMarineBlue"} htmlFor="userEmail">{personalInfo.emailField.email}</label>
+          <label className={"text-pMarineBlue font-normal"} htmlFor="userEmail">{personalInfo.emailField.email}</label>
           <input className={`${isInputActive && inputFieldType === "email" ? "input-active " : " "} ${isEmailValid || isEmailEmpty ? " " : "invalid-email "} ${isRouteClicked && isEmailEmpty ? " input-invalid " : ""}` + "input"}
                  onBlur={handleBlur}
                  onFocus={handleFocus}
@@ -64,7 +63,8 @@ function FormPersonal({ personalInfo }) {
           </div>
         </fieldset>
         <fieldset>
-          <label className={"text-pMarineBlue"} htmlFor="userPhoneNum">{personalInfo.phoneField.phone}</label>
+          <label className={"text-pMarineBlue font-normal"}
+                 htmlFor="userPhoneNum">{personalInfo.phoneField.phone}</label>
           <input className={`${isInputActive && inputFieldType === "tel" ? "input-active" : ""} ${isRouteClicked && isPhoneEmpty ? " input-invalid " : ""}` + "input"}
                  onBlur={handleBlur}
                  onFocus={handleFocus}

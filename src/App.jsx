@@ -14,8 +14,8 @@ function App() {
         <FormContextProvider>
           <Routes>
             <Route path={"/"} element={<FormPersonal personalInfo={personalInfo} />} />
-            <Route path={"/add-on"} element={<FormAddOn personalInfo={addOnText} />} />
             <Route path={"/select-plan"} element={<FormSelectPlan />} />
+            <Route path={"/add-on"} element={<FormAddOn personalInfo={addOnText} />} />
             <Route path={"/submit"} element={<FormSubmit />} />
           </Routes>
         </FormContextProvider>

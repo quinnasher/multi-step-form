@@ -12,11 +12,11 @@
     }
 
     .input {
-        @apply border-[1.5px] bg-transparent border-nLightGray rounded-[0.3rem] pl-3 py-1.5 w-full outline-none
+        @apply hover:border-pPurplishBlue text-pMarineBlue font-medium cursor-pointer border-[1.5px] bg-transparent border-nLightGray rounded-[0.3rem] pl-3 py-1.5 w-full outline-none
     }
 
     .input-active {
-        @apply border-pMarineBlue
+        @apply border-pPurplishBlue
     }
 
     .input-invalid {

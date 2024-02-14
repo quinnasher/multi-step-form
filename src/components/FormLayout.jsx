@@ -11,7 +11,8 @@ function FormLayout({ children }) {
     useFindPreviousLocationIndex,
     useFindNextLocationIndex,
     movePreviousRoute,
-    moveNextRoute
+    moveNextRoute,
+    setIsRouteClicked
   } = useContext(FormContext);
 
   const nextLocation = useFindNextLocationIndex(1);
@@ -33,7 +34,8 @@ function FormLayout({ children }) {
         <Link to={movePreviousRoute(previousLocation)}>
           <Button text={"Go Back"} btnStyle={"text-nCoolGray font-bold"}></Button>
         </Link>
-        <Link to={moveNextRoute(nextLocation)}>
+        <Link to={moveNextRoute(nextLocation)} onClick={() => setIsRouteClicked(true)
+        }>
           <Button text={"Next Step"} btnStyle={"next-btn"}></Button>
         </Link>
       </div>
