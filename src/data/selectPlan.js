@@ -13,7 +13,7 @@ const selectPlan = {
       billIcon: arcadeIcon,
       billAmount: 9,
       billFormat: function() {
-        return `$${this.billAmount}/mo`; // Use a regular function expression
+        return `$${this.billAmount}/mo`;
       },
       monthFree: ""
     },
